@@ -19,7 +19,7 @@ cd terraform
 
 #new lines:
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-AWS_REGION=${DEFAULT_AWS_REGION:eu-central-1}
+AWS_REGION=${DEFAULT_AWS_REGION:-eu-central-1}
 terraform init -input=false \
   -backend-config="bucket=twin-terraform-state-${AWS_ACCOUNT_ID}" \
   -backend-config="key=${ENVIRONMENT}/terraform.tfstate" \
