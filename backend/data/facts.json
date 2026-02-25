@@ -1,0 +1,15 @@
+{
+    "full_name": "Oren Stern",
+    "name": "Oren",
+    "current_role": "AIOps engineer",
+    "location": "Tel Aviv, Israel",
+    "email": "oren.stern@gmail.com",
+    "linkedin": "linkedin.com/in/oren-stern",
+    "specialties": [
+      "Agentic architectures",
+      "Production-grade LLM systems",
+      "RAG pipelines",
+      "MCP tool orchestration",
+      "Model tuning for scalable AI applications"
+    ]
+  }
