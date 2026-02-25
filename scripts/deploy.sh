@@ -14,19 +14,19 @@ echo "📦 Building Lambda package..."
 # 2. Terraform workspace & apply
 cd terraform
 
-# Resolve backend config
-TF_STATE_BUCKET="${TF_STATE_BUCKET:-my-tf-state-bucket}"
-TF_STATE_REGION="${TF_STATE_REGION:-us-east-1}"
-TF_STATE_KEY="${PROJECT_NAME}/${ENVIRONMENT}/terraform.tfstate"
-TF_LOCK_TABLE="${TF_LOCK_TABLE:-terraform-locks}"
+# Old line:
+# terraform init -input=false
 
+# New lines:
+AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+AWS_REGION=${DEFAULT_AWS_REGION:-us-east-1}
 terraform init -input=false \
-  -backend-config="bucket=$TF_STATE_BUCKET" \
-  -backend-config="key=$TF_STATE_KEY" \
-  -backend-config="region=$TF_STATE_REGION" \
-  -backend-config="dynamodb_table=$TF_LOCK_TABLE"
+  -backend-config="bucket=twin-terraform-state-${AWS_ACCOUNT_ID}" \
+  -backend-config="key=${ENVIRONMENT}/terraform.tfstate" \
+  -backend-config="region=${AWS_REGION}" \
+  -backend-config="dynamodb_table=twin-terraform-locks" \
+  -backend-config="encrypt=true"
   
-
 if ! terraform workspace list | grep -q "$ENVIRONMENT"; then
   terraform workspace new "$ENVIRONMENT"
 else
