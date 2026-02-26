@@ -32,6 +32,7 @@ bedrock_client = boto3.client(
     region_name=os.getenv("DEFAULT_AWS_REGION", "us-east-1")
 )
 
+
 # Bedrock model selection
 # Available models:
 # - amazon.nova-micro-v1:0  (fastest, cheapest)
